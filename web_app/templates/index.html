@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Motif Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #282a36;
+            color: #f8f8f2;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #44475a;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #bd93f9;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #bd93f9;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .logo {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Motif Finder</h1>
+        <form method="post">
+            <label for="sequence">Enter DNA Sequence:</label>
+            <input type="text" id="sequence" name="sequence" required>
+            <button type="submit">Find Motifs</button>
+        </form>
+        <div class="result">
+            <h2>Consensus Motif:</h2>
+            <p>{{ motifs }}</p>
+            <h2>Predicted Function:</h2>
+            <p>{{ function }}</p>
+        </div>
+    </div>
+</body>
+</html>

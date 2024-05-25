@@ -1,0 +1,5 @@
+flask
+biopython
+scikit-learn
+weblogo
+logomaker

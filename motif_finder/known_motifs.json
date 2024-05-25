@@ -1,0 +1,12 @@
+{
+  "motifs": [
+    {
+      "name": "Motif1",
+      "sequence": "ATGC"
+    },
+    {
+      "name": "Motif2",
+      "sequence": "CGTA"
+    }
+  ]
+}
