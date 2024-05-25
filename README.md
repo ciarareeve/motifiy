@@ -104,6 +104,4 @@ motifiy/
         └── result.html
 ```
 GitHub Repository: [Motify GitHub Repository](https://github.com/ciarareeve/motifiy)
-```
 
-By following these instructions, you can create the README file either in your coding environment or directly on GitHub.
