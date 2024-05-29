@@ -1,3 +1,0 @@
-ml_model
-motif_finder
-web_app

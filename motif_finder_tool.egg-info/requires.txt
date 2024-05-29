@@ -1,3 +1,0 @@
-flask
-biopython
-scikit-learn

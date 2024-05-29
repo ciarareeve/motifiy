@@ -1,2 +1,0 @@
-[console_scripts]
-motif_finder = main:main
