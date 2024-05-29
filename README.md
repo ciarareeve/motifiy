@@ -18,7 +18,7 @@ To install Motify, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/ciarareeve/motifiy.git
+   git clone https://github.com/ciarareeve/motify.git
    cd motify
    ```
 
