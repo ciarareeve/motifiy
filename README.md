@@ -19,7 +19,7 @@ To install Motify, follow these steps:
 
    ```bash
    git clone https://github.com/ciarareeve/motifiy.git
-   cd motifiy
+   cd motify
    ```
 
 2. Set up a conda environment:
