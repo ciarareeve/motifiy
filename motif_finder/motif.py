@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import logomaker
 from Bio import SeqIO
 
-def load_known_motifs(filepath='motif_finder/known_motifs.json'):
+def load_known_motifs(filepath='known_motifs.json'):
     """
     Load known motifs from a JSON file.
 
