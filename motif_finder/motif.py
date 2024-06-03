@@ -9,19 +9,27 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import logomaker
 from Bio import SeqIO
+import os
 
-def load_known_motifs(filepath='known_motifs.json'):
+def load_known_motifs():
     """
     Load known motifs from a JSON file.
-
-    Args:
-        filepath (str): The path to the JSON file containing the known motifs.
 
     Returns:
         list: A list of tuples, where each tuple contains the name of the motif and the motif object.
     """
-    with open(filepath, 'r') as file:
+    # Get the directory of this script
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+
+    # Construct the full path to the known_motifs.json file
+    file_path = os.path.join(dir_path, 'known_motifs.json')
+
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError(f"The file {file_path} does not exist.")
+
+    with open(file_path, 'r') as file:
         data = json.load(file)
+    known_motifs = []
     known_motifs = []
     for entry in data['motifs']:
         motif_seq = Seq(entry['sequence'])
@@ -93,6 +101,7 @@ def visualize_motif(pwm, output_file='motif_logo.png'):
     pwm_df.index.name = 'Position'
     logo = logomaker.Logo(pwm_df)
     plt.savefig(output_file)
+    plt.close() 
 
 def convert_to_kmer_frequency(sequence, k=6):
     """

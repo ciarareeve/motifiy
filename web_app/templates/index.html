@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Motif Finder</title>
+    <title>Motify</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             background-color: #282a36;
             color: #f8f8f2;
         }
@@ -18,59 +16,55 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h1 {
-            text-align: center;
+        pre {
+            text-align: left;
             color: #bd93f9;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 10px; /* Adjust font size here */
+            overflow-x: auto; /* Ensure it scrolls if necessary */
         }
         form {
             display: flex;
             flex-direction: column;
+            gap: 10px;
         }
-        label {
-            margin-bottom: 10px;
-            color: #495057;
-        }
-        input[type="text"] {
+        input[type="text"], input[type="file"], textarea, select {
             padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ced4da;
+            border: none;
             border-radius: 4px;
         }
         button {
             padding: 10px;
-            color: #ffffff;
-            background-color: #007bff;
             border: none;
             border-radius: 4px;
+            background-color: #bd93f9;
+            color: white;
             cursor: pointer;
         }
         button:hover {
-            background-color: #bd93f9;
-        }
-        .result {
-            margin-top: 20px;
-        }
-        .logo {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
+            background-color: #ff79c6;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Motif Finder</h1>
-        <form method="post">
-            <label for="sequence">Enter DNA Sequence:</label>
-            <input type="text" id="sequence" name="sequence" required>
-            <button type="submit">Find Motifs</button>
+        <pre>
+__/\\\\____________/\\\\________/\\\\\________/\\\\\\\\\\\\\\\___/\\\\\\\\\\\___/\\\\\\\\\\\\\\\___/\\\________/\\\_
+ _\/\\\\\\________/\\\\\\______/\\\///\\\_____\///////\\\/////___\/////\\\///___\/\\\///////////___\///\\\____/\\\/__
+  _\/\\\//\\\____/\\\//\\\____/\\\/__\///\\\_________\/\\\____________\/\\\______\/\\\________________\///\\\/\\\/___
+   _\/\\\\///\\\/\\\/_\/\\\___/\\\______\//\\\________\/\\\____________\/\\\______\/\\\\\\\\\\\__________\///\\\/_____
+    _\/\\\__\///\\\/___\/\\\__\/\\\_______\/\\\________\/\\\____________\/\\\______\/\\\///////_____________\/\\\_____
+     _\/\\\____\///_____\/\\\__\//\\\______/\\\_________\/\\\____________\/\\\______\/\\\____________________\/\\\_____
+      _\/\\\_____________\/\\\___\///\\\__/\\\___________\/\\\____________\/\\\______\/\\\____________________\/\\\_____
+       _\/\\\_____________\/\\\_____\///\\\\\/____________\/\\\_________/\\\\\\\\\\\__\/\\\____________________\/\\\_____
+        _\///______________\///________\/////______________\///_________\///////////___\///_____________________\///_____
+        </pre>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <input type="text" name="species" placeholder="Enter species (default: vertebrates)">
+            <textarea name="sequence" placeholder="Enter DNA sequence"></textarea>
+            <input type="file" name="file">
+            <button type="submit">Submit</button>
         </form>
-        <div class="result">
-            <h2>Consensus Motif:</h2>
-            <p>{{ motifs }}</p>
-            <h2>Predicted Function:</h2>
-            <p>{{ function }}</p>
-        </div>
     </div>
 </body>
 </html>

@@ -1,5 +1,8 @@
-flask
-biopython
-scikit-learn
-weblogo
-logomaker
+Flask==3.0.2
+requests==2.31.0
+biopython==1.83
+pandas==2.2.2
+logomaker==0.8
+matplotlib==3.8.4
+numpy==1.26.4
+scipy==1.13.0

@@ -65,9 +65,9 @@ motif_finder --file path/to/your/file.fasta --out result.html
 
 ### Example Dataset
 
-A minimal test example dataset is provided in the repository as `test_sequences.fasta`. You can use this file to test the functionality of Motify.
+A minimal test example dataset is provided in the repository as `test_seq.fasta`. You can use this file to test the functionality of Motify.
 
-#### Example FASTA File (`test_sequences.fasta`)
+#### Example FASTA File (`test_seq.fasta`)
 
 ```
 >Sequence1
@@ -82,26 +82,24 @@ TTAGGCTAAC
 
 ```
 motifiy/
+├── README.md
 ├── main.py
 ├── ml_model
-│   ├── __init__.py
-│   ├── __pycache__
-│   ├── model.py
+│   └── model.py
 ├── motif_finder
-│   ├── __init__.py
-│   ├── __pycache__
 │   ├── known_motifs.json
 │   ├── motif.py
+│   ├── static
+│   │   └── motif_logo.png
+│   └── test_seq.fasta
 ├── requirements.txt
 ├── setup.py
-├── test_sequences.fasta
 └── web_app
-    ├── __init__.py
-    ├── __pycache__
     ├── app.py
     └── templates
         ├── index.html
         └── result.html
+
 ```
 GitHub Repository: [Motify GitHub Repository](https://github.com/ciarareeve/motifiy)
 
