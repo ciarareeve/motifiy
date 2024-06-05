@@ -1,6 +1,4 @@
-### Motify README
-
-# Motify
+### Motify
 
 Motify is a web-based and command-line tool designed to find and visualize DNA sequence motifs. The tool allows users to input DNA sequences and identify matching motifs based on predefined motif files. It then generates visual representations of these motifs using probability weight matrices (PWMs).
 
@@ -31,6 +29,10 @@ Motify requires Python 3.6 or higher. Ensure you have Python installed on your s
    ```bash
    conda create --name motify python=3.8  # or your preferred Python version
    conda activate motify
+   ```
+
+3. Install the required packages:
+   ```bash
    conda install --file requirements.txt
    ```
 
@@ -94,39 +96,10 @@ python main.py --sequence ACTGACTGACTG --out result.html --verbose
 
 This command will process the input sequence `ACTGACTGACTG`, find matching motifs, generate logos, and save the results to `result.html`.
 
-
-## Setup Script
-
-Create a `setup.py` file with the following contents:
-
-```python
-from setuptools import setup, find_packages
-
-setup(
-    name='motify',
-    version='0.1',
-    packages=find_packages(),
-    include_package_data=True,
-    install_requires=[
-        'Flask==2.0.2',
-        'pandas==1.3.3',
-        'logomaker==0.8',
-        'matplotlib==3.4.3'
-    ],
-    entry_points={
-        'console_scripts': [
-            'motify=main:main',
-        ],
-    },
-)
-```
-
 ## Contributing
 
 We welcome contributions! Please fork the repository and submit pull requests.
 
-
 ## Contact
 
 For any questions or inquiries, please contact cireeve@ucsd.edu
-
