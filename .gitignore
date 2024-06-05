@@ -122,3 +122,4 @@ dmypy.json
 
 # Egg info
 *.egg-info/
+tests/GRCm38.fa
