@@ -13,7 +13,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'motif_finder=main:main',
+            'motify=main:main',
         ],
     },
 )

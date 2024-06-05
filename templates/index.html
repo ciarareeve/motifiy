@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Motify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #282a36;
+            color: #f8f8f2;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #44475a;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #bd93f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .button-container {
+            text-align: center;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #bd93f9;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+        }
+        .button-container button:hover {
+            background-color: #ff79c6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><img src="/static/motify.png"/></h1>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <label for="sequence">Target Sequence</label>
+            <input type="text" id="sequence" name="sequence" placeholder="Enter target sequence here">
+            
+            <label for="file">Target File</label>
+            <input type="file" id="file" name="file">
+
+            <label for="background_file">Background File</label>
+            <input type="file" id="background_file" name="background_file">
+
+            <div class="button-container">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
