@@ -1,105 +1,132 @@
+### Motify README
 
 # Motify
 
-Motify is a comprehensive tool for motif finding and analysis in DNA sequences. It identifies motifs, generates consensus sequences, compares them against known motifs, and provides visual representations of motifs.
+Motify is a web-based and command-line tool designed to find and visualize DNA sequence motifs. The tool allows users to input DNA sequences and identify matching motifs based on predefined motif files. It then generates visual representations of these motifs using probability weight matrices (PWMs).
 
 ## Features
 
-- **Motif Identification:** Find motifs in DNA sequences from direct input or file uploads (FASTA, VCF).
-- **Consensus Motif:** Generate the consensus sequence representing the most common pattern.
-- **Position Weight Matrix (PWM):** Create a PWM to represent nucleotide frequencies at each position.
-- **Motif Logo:** Generate visual representations of motifs using `logomaker`.
-- **User Interface:** Access the tool via a user-friendly web interface or a command-line interface (CLI).
+- **Web Application**: An intuitive web interface for inputting DNA sequences and viewing matching motifs.
+- **Command-Line Interface (CLI)**: A robust CLI for processing sequences and generating HTML reports of matching motifs.
+- **Motif Visualization**: Generates logos for motifs using PWMs, providing a clear visual representation.
+- **Expandable**: Supports degenerate base sequences, allowing for a comprehensive search of motif variations.
 
 ## Installation
 
-To install Motify, follow these steps:
+To set up and run Motify, follow these steps:
+
+### Requirements
+
+Motify requires Python 3.6 or higher. Ensure you have Python installed on your system.
+
+### Using requirements.txt
 
 1. Clone the repository:
+    ```bash
+    git clone https://github.com/yourusername/motify.git
+    cd motify
+    ```
 
+2. Create a virtual environment and activate it:
    ```bash
-   git clone https://github.com/ciarareeve/motify.git
-   cd motify
+   conda create --name motify python=3.8  # or your preferred Python version
+   conda activate motify
+   conda install --file requirements.txt
    ```
 
-2. Set up a conda environment:
+## Configuration
 
-   ```bash
-   conda create --name motif_finder_env python=3.9
-   conda activate motif_finder_env
-   ```
+1. **Motif Files**: Place your `.motif` files in the `motifs` directory inside the project folder. This directory should contain the motif files used by Motify to find matching motifs in the input sequences.
 
-3. Install the required dependencies:
+## Running the Application
 
-   ```bash
-   pip install -e .
-   ```
-
-## Usage
-
-### Web Interface
+### Web Application
 
 To run the web application, use the following command:
 
 ```bash
-motif_finder --web
+python main.py --web
 ```
 
-Open your web browser and go to `http://127.0.0.1:5000/`. You can input a DNA sequence or upload a file to find motifs and view results directly in the browser.
+The web app will start, and you can access it via `http://localhost:5000` in your web browser.
 
-### Command-Line Interface (CLI)
+### Command-Line Interface
 
-To run Motify from the command line, use the following commands:
+To run the CLI, use the following commands:
 
-#### Using a Sequence
+- **Find motifs in a sequence**:
+    ```bash
+    python main.py --sequence ACTGACTGACTG --out result.html
+    ```
+
+- **Find motifs in a file**:
+    ```bash
+    python main.py --file sequences.txt --out result.html
+    ```
+
+- **Run in verbose mode**:
+    ```bash
+    python main.py --sequence ACTGACTGACTG --out result.html --verbose
+    ```
+
+## Usage
+
+### Web Application
+
+1. Open your web browser and navigate to `http://localhost:5000`.
+2. Enter your DNA sequence in the provided input field.
+3. Click the submit button to process the sequence and find matching motifs.
+4. View the results on the next page, which will display the matching motifs and their logos.
+
+### Command-Line Interface
+
+1. Use the `--sequence` flag to input a sequence directly or the `--file` flag to input a file containing sequences.
+2. The `--out` flag specifies the output HTML file where the results will be saved.
+3. The `--verbose` flag enables detailed logging for debugging purposes.
+
+## Example
+
+Here's an example of how to use the CLI:
 
 ```bash
-motif_finder --sequence "ATGCTAGCTAG" --out result.html
+python main.py --sequence ACTGACTGACTG --out result.html --verbose
 ```
 
-#### Using a File
+This command will process the input sequence `ACTGACTGACTG`, find matching motifs, generate logos, and save the results to `result.html`.
 
-```bash
-motif_finder --file path/to/your/file.fasta --out result.html
+
+## Setup Script
+
+Create a `setup.py` file with the following contents:
+
+```python
+from setuptools import setup, find_packages
+
+setup(
+    name='motify',
+    version='0.1',
+    packages=find_packages(),
+    include_package_data=True,
+    install_requires=[
+        'Flask==2.0.2',
+        'pandas==1.3.3',
+        'logomaker==0.8',
+        'matplotlib==3.4.3'
+    ],
+    entry_points={
+        'console_scripts': [
+            'motify=main:main',
+        ],
+    },
+)
 ```
 
-### Example Dataset
+## Contributing
 
-A minimal test example dataset is provided in the repository as `test_seq.fasta`. You can use this file to test the functionality of Motify.
+We welcome contributions! Please fork the repository and submit pull requests.
 
-#### Example FASTA File (`test_seq.fasta`)
 
-```
->Sequence1
-ATGCTAGCTAG
->Sequence2
-CGTACGTAGC
->Sequence3
-TTAGGCTAAC
-```
+## Contact
 
-## Project Structure
-
-```
-motifiy/
-├── README.md
-├── main.py
-├── ml_model
-│   └── model.py
-├── motif_finder
-│   ├── known_motifs.json
-│   ├── motif.py
-│   ├── static
-│   │   └── motif_logo.png
-│   └── test_seq.fasta
-├── requirements.txt
-├── setup.py
-└── web_app
-    ├── app.py
-    └── templates
-        ├── index.html
-        └── result.html
-
-```
-GitHub Repository: [Motify GitHub Repository](https://github.com/ciarareeve/motifiy)
+For any questions or inquiries, please contact cireeve@ucsd.edu
 
