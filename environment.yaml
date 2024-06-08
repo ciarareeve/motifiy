@@ -1,0 +1,21 @@
+# environment.yml
+
+name: motify_env
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - numpy=1.23.5
+  - pandas=1.5.3
+  - scikit-learn=1.2.2
+  - tensorflow=2.16.1
+  - deeplift=0.6.13.0
+  - matplotlib=3.6.2
+  - pyfaidx=0.6.0.1
+  - ipython=8.9.0
+  - pip:
+    - sphinx
+    - sphinx_rtd_theme
+

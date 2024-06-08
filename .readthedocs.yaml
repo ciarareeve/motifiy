@@ -1,0 +1,17 @@
+# .readthedocs.yaml
+
+version: 2
+
+# Build configuration
+sphinx:
+  configuration: docs/conf.py
+
+# Build using conda
+conda:
+  environment: environment.yml
+
+# Custom steps to install your package
+build:
+  commands:
+    - pip install -e .
+
