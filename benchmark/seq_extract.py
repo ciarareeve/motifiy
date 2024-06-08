@@ -1,4 +1,41 @@
 import numpy as np
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+import random
+
+# Load the dataset
+X_val = np.load('../data/processed/X.npy', allow_pickle=True)
+print(f"Validation data loaded. Shape: {X_val.shape}")
+
+# Determine the length of each sequence
+sequence_lengths = [len(seq) for seq in X_val]
+
+# Print some statistics about the sequence lengths
+print(f"Total number of sequences: {len(sequence_lengths)}")
+print(f"Minimum sequence length: {min(sequence_lengths)}")
+print(f"Maximum sequence length: {max(sequence_lengths)}")
+print(f"Average sequence length: {np.mean(sequence_lengths)}")
+print(f"Median sequence length: {np.median(sequence_lengths)}")
+
+# Select a diverse subset of sequences
+random.seed(42)  # For reproducibility
+indices = random.sample(range(len(X_val)), 100)
+diverse_sequences = [X_val[i] for i in indices]
+
+# One-hot encode the selected sequences
+def one_hot_encode(sequence, max_len):
+    mapping = {'A': 0, 'C': 1, 'G': 2, 'T': 3, 'a': 0, 'c': 1, 'g': 2, 't': 3}
+    one_hot = np.zeros((max_len, 4), dtype=np.int8)
+    for i, char in enumerate(sequence[:max_len]):
+        if char in mapping:
+            one_hot[i, mapping[char]] = 1
+    return one_hot
+
+max_len = max(sequence_lengths)
+diverse_sequences_encoded = [one_hot_encode(seq, max_len) for seq in diverse_sequences]
+
+# Save the selected sequences in FASTA format
+=======
 
 # Load validation data
 print("Loading validation data...")
@@ -12,18 +49,28 @@ num_sequences_to_process = 100
 sequences_subset = X_val[:num_sequences_to_process]
 
 # Define a function to convert one-hot encoded sequences back to nucleotide sequences
+>>>>>>> ea235ad8debe94649d5edfd32961ae39931b64ad
 def one_hot_decode(one_hot_seq):
     mapping = {0: 'A', 1: 'C', 2: 'G', 3: 'T'}
     return ''.join([mapping[np.argmax(pos)] for pos in one_hot_seq])
 
+<<<<<<< HEAD
+fasta_filename = 'diverse_sequences_subset.fa'
+with open(fasta_filename, 'w') as fasta_file:
+    for i, seq in enumerate(diverse_sequences_encoded):
+=======
 # Save the sequences in FASTA format
 fasta_filename = 'sequences_subset.fa'
 with open(fasta_filename, 'w') as fasta_file:
     for i, seq in enumerate(sequences_subset):
+>>>>>>> ea235ad8debe94649d5edfd32961ae39931b64ad
         decoded_seq = one_hot_decode(seq)
         fasta_file.write(f'>sequence_{i+1}\n')
         fasta_file.write(f'{decoded_seq}\n')
 
+<<<<<<< HEAD
+print(f"Saved {len(diverse_sequences)} diverse sequences to {fasta_filename}")
+=======
 print(f"Saved {num_sequences_to_process} sequences to {fasta_filename}")
 
 
