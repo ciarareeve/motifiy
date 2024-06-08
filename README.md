@@ -1,105 +1,136 @@
-### Motify
 
-Motify is a web-based and command-line tool designed to find and visualize DNA sequence motifs. The tool allows users to input DNA sequences and identify matching motifs based on predefined motif files. It then generates visual representations of these motifs using probability weight matrices (PWMs).
+# Motify
+
+Motify is a tool for identifying and fine-mapping sequence motifs from ChIP-seq data using deep learning. By leveraging the power of BPNet and DeepLIFT, Motify provides an advanced approach to motif discovery that offers finer resolution compared to traditional methods.
 
 ## Features
 
-- **Web Application**: An intuitive web interface for inputting DNA sequences and viewing matching motifs.
-- **Command-Line Interface (CLI)**: A robust CLI for processing sequences and generating HTML reports of matching motifs.
-- **Motif Visualization**: Generates logos for motifs using PWMs, providing a clear visual representation.
-- **Expandable**: Supports degenerate base sequences, allowing for a comprehensive search of motif variations.
+- **Sequence Scanning**: Scans input sequences to detect motifs.
+- **Fine Mapping**: Uses DeepLIFT to attribute contributions to specific nucleotide positions, allowing for fine mapping of motifs.
+- **Contextual Detection**: Identifies motifs in their genomic context.
+- **Visualization**: Generates visual representations of motif attributions and clustering results.
+
+### Why Use Motify for Motif Finding?
+
+Traditional methods for motif finding, such as peak calling followed by Position Weight Matrix (PWM) generation, often provide a broad overview of potential binding sites but can lack the resolution needed to understand the precise sequence features driving these bindings. Motify leverages deep learning techniques to predict ChIP-seq readouts directly from raw sequence data, which allows for a more nuanced and fine-grained analysis. By using BPNet for prediction and DeepLIFT for feature attribution, Motify identifies not just the presence of motifs, but also their specific contributions to the ChIP-seq signal within their genomic context. This approach can reveal subtle sequence variations and dependencies that traditional methods might miss, providing a more comprehensive and detailed map of regulatory elements. Additionally, the fine-mapping capability of Motify can improve our understanding of motif functionality and interactions, offering insights into complex gene regulation mechanisms. This makes Motify a powerful tool for researchers aiming to uncover the intricacies of genomic regulation with higher precision.
+
+- **High Resolution**: Offers finer resolution compared to traditional Position Weight Matrices (PWMs).
+- **Interpretability**: Uses DeepLIFT for feature attribution, making it easier to understand the model's predictions.
+- **Versatility**: Can be used with both histone and transcription factor ChIP-seq data.
 
 ## Installation
 
-To set up and run Motify, follow these steps:
+### Prerequisites
 
-### Requirements
+Ensure you have the following installed:
+- Python 3.10 or later
+- Anaconda or Miniconda (recommended for managing dependencies)
 
-Motify requires Python 3.6 or higher. Ensure you have Python installed on your system.
+### Install Instructions for macOS and Windows
 
-### Using requirements.txt
-
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/motify.git
-    cd motify
-    ```
-
-2. Create a virtual environment and activate it:
-   ```bash
-   conda create --name motify python=3.8  # or your preferred Python version
-   conda activate motify
+1. **Clone the repository**:
+   ```sh
+   git clone https://github.com/ciara/motify.git
+   cd motify
    ```
 
-3. Install the required packages:
-   ```bash
-   conda install --file requirements.txt
+2. **Create a virtual environment**:
+   ```sh
+   conda create -n motify_env python=3.10
+   conda activate motify_env
    ```
 
-## Configuration
+3. **Install dependencies**:
+   ```sh
+   pip install -r requirements.txt
+   ```
 
-1. **Motif Files**: Place your `.motif` files in the `motifs` directory inside the project folder. This directory should contain the motif files used by Motify to find matching motifs in the input sequences.
+4. **Download required data**:
+   Place your reference genome (e.g., `hg38.fa`) and ChIP-seq data (e.g., `chip_seq_data.bed`) in the `data/raw` directory.
 
-## Running the Application
+### Additional Steps for Windows Users
 
-### Web Application
+1. **Install Visual Studio Build Tools**:
+   Download and install Visual Studio Build Tools from [here](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
 
-To run the web application, use the following command:
-
-```bash
-python main.py --web
-```
-
-The web app will start, and you can access it via `http://localhost:5000` in your web browser.
-
-### Command-Line Interface
-
-To run the CLI, use the following commands:
-
-- **Find motifs in a sequence**:
-    ```bash
-    python main.py --sequence ACTGACTGACTG --out result.html
-    ```
-
-- **Find motifs in a file**:
-    ```bash
-    python main.py --file sequences.txt --out result.html
-    ```
-
-- **Run in verbose mode**:
-    ```bash
-    python main.py --sequence ACTGACTGACTG --out result.html --verbose
-    ```
+2. **Ensure Long Paths are Enabled**:
+   Enable long path support on Windows by editing the registry or using the Group Policy Editor.
 
 ## Usage
 
-### Web Application
+### Step 1: Prepare Data
 
-1. Open your web browser and navigate to `http://localhost:5000`.
-2. Enter your DNA sequence in the provided input field.
-3. Click the submit button to process the sequence and find matching motifs.
-4. View the results on the next page, which will display the matching motifs and their logos.
+Ensure your reference genome and ChIP-seq data are placed in the `data/raw` directory.
 
-### Command-Line Interface
+### Step 2: Train the Model
 
-1. Use the `--sequence` flag to input a sequence directly or the `--file` flag to input a file containing sequences.
-2. The `--out` flag specifies the output HTML file where the results will be saved.
-3. The `--verbose` flag enables detailed logging for debugging purposes.
+Run the model training script:
 
-## Example
-
-Here's an example of how to use the CLI:
-
-```bash
-python main.py --sequence ACTGACTGACTG --out result.html --verbose
+```sh
+python scripts/model_training.py
 ```
 
-This command will process the input sequence `ACTGACTGACTG`, find matching motifs, generate logos, and save the results to `result.html`.
+### Step 3: Compute Attributions with DeepLIFT
 
-## Contributing
+After the model has finished training, run the DeepLIFT attribution script:
 
-We welcome contributions! Please fork the repository and submit pull requests.
+```sh
+python scripts/deepLIFT_attribution.py
+```
+
+### Step 4: Cluster Seqlets
+
+Finally, run the clustering script:
+
+```sh
+python scripts/clustering.py
+```
+
+## Script Explanations
+
+### `model_training.py`
+
+- **Objective**: Train a BPNet-like model to predict ChIP-seq readouts.
+- **Process**:
+  1. Load and preprocess the data.
+  2. Split the data into training and validation sets.
+  3. Create and compile the BPNet-like model.
+  4. Train the model with early stopping and model checkpointing.
+  5. Save the trained model and training history.
+
+### `deepLIFT_attribution.py`
+
+- **Objective**: Compute attributions for the trained model using DeepLIFT.
+- **Process**:
+  1. Load the trained BPNet model.
+  2. Convert the model to DeepLIFT format.
+  3. Compute attributions for a subset of the validation data.
+  4. Save the computed attributions.
+  5. Visualize the attributions for the first sequence.
+
+### `clustering.py`
+
+- **Objective**: Extract high-attribution seqlets and cluster them.
+- **Process**:
+  1. Load the attributions and input data.
+  2. Extract high-attribution seqlets.
+  3. Cluster the seqlets using DBSCAN.
+  4. Save the clustering results.
+  5. Visualize the clusters.
+
+## Requirements
+
+```
+numpy==1.23.5
+pandas==1.5.3
+scikit-learn==1.2.2
+tensorflow==2.16.1
+deeplift==0.6.13.0
+matplotlib==3.6.2
+pyfaidx==0.6.0.1
+IPython==8.9.0
+```
 
 ## Contact
 
-For any questions or inquiries, please contact cireeve@ucsd.edu
+For any questions or issues, please contact cireeve@ucsd.edu.
