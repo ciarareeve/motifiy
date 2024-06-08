@@ -1,60 +1,62 @@
-
 # Motify
 
 Motify is a tool for identifying and fine-mapping sequence motifs from ChIP-seq data using deep learning. By leveraging the power of BPNet and Integrated Gradients, Motify provides an advanced approach to motif discovery that offers finer resolution compared to traditional methods.
 
 ## Features
 
-- **Sequence Scanning**: Scans input sequences to detect motifs.
-- **Fine Mapping**: Uses Integrated Gradients to attribute contributions to specific nucleotide positions, allowing for fine mapping of motifs.
-- **Contextual Detection**: Identifies motifs in their genomic context.
-- **Visualization**: Generates visual representations of motif attributions and clustering results.
+- **Sequence Scanning:** Scans input sequences to detect motifs.
+- **Fine Mapping:** Uses Integrated Gradients to attribute contributions to specific nucleotide positions, allowing for fine mapping of motifs.
+- **Contextual Detection:** Identifies motifs in their genomic context.
+- **Visualization:** Generates visual representations of motif attributions and clustering results.
 
-### Why Use Motify for Motif Finding?
+## Why Use Motify for Motif Finding?
 
 Traditional methods for motif finding, such as peak calling followed by Position Weight Matrix (PWM) generation, often provide a broad overview of potential binding sites but can lack the resolution needed to understand the precise sequence features driving these bindings. Motify leverages deep learning techniques to predict ChIP-seq readouts directly from raw sequence data, which allows for a more nuanced and fine-grained analysis. By using BPNet for prediction and Integrated Gradients for feature attribution, Motify identifies not just the presence of motifs, but also their specific contributions to the ChIP-seq signal within their genomic context. This approach can reveal subtle sequence variations and dependencies that traditional methods might miss, providing a more comprehensive and detailed map of regulatory elements. Additionally, the fine-mapping capability of Motify can improve our understanding of motif functionality and interactions, offering insights into complex gene regulation mechanisms. This makes Motify a powerful tool for researchers aiming to uncover the intricacies of genomic regulation with higher precision.
 
-- **High Resolution**: Offers finer resolution compared to traditional Position Weight Matrices (PWMs).
-- **Interpretability**: Uses Integrated Gradients for feature attribution, making it easier to understand the model's predictions.
-- **Versatility**: Can be used with both histone and transcription factor ChIP-seq data.
+- **High Resolution:** Offers finer resolution compared to traditional Position Weight Matrices (PWMs).
+- **Interpretability:** Uses Integrated Gradients for feature attribution, making it easier to understand the model's predictions.
+- **Versatility:** Can be used with both histone and transcription factor ChIP-seq data.
+
+## Before Proceeding:
+Please note that a pre-trained model is already available in the `results` folder. This allows you to start directly from Step 4. Training the model is time-intensive; therefore, for tutorial purposes, we provide a pre-trained model trained on histone mark H3K27ac data with the hg38 reference genome. You can fine-tune this model and all subsequent scripts to suit your specific application needs. Feel free to run the provided Jupyter Notebook scripts for more interactive tuning.
 
 ## Installation
 
 ### Prerequisites
 
 Ensure you have the following installed:
+
 - Python 3.10 or later
 - Anaconda or Miniconda (recommended for managing dependencies)
 
 ### Install Instructions for macOS and Windows
 
-1. **Clone the repository**:
-   ```sh
+1. Clone the repository:
+
+   ```bash
    git clone https://github.com/ciarareeve/motify.git
    cd motify
    ```
 
-2. **Create a virtual environment**:
-   ```sh
+2. Create a virtual environment:
+
+   ```bash
    conda create -n motify_env python=3.10
    conda activate motify_env
    ```
 
-3. **Install dependencies**:
-   ```sh
+3. Install dependencies:
+
+   ```bash
    pip install -r requirements.txt
    ```
 
-4. **Download required data**:
-   Place your reference genome (e.g., `hg38.fa`) and ChIP-seq data (e.g., `chip_seq_data.bed`) in the `data/raw` directory.
+4. Download required data: Place your reference genome (e.g., `hg38.fa`) and ChIP-seq data (e.g., `chip_seq_data.bed`) in the `data/raw` directory.
 
 ### Additional Steps for Windows Users
 
-1. **Install Visual Studio Build Tools**:
-   Download and install Visual Studio Build Tools from [here](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
-
-2. **Ensure Long Paths are Enabled**:
-   Enable long path support on Windows by editing the registry or using the Group Policy Editor.
+- Install Visual Studio Build Tools: Download and install Visual Studio Build Tools from [here](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
+- Ensure Long Paths are Enabled: Enable long path support on Windows by editing the registry or using the Group Policy Editor.
 
 ## Usage
 
@@ -66,7 +68,7 @@ Ensure your reference genome and ChIP-seq data are placed in the `data/raw` dire
 
 Run the data processing script to prepare your sequences:
 
-```sh
+```bash
 python scripts/data_processing.py
 ```
 
@@ -74,7 +76,7 @@ python scripts/data_processing.py
 
 Run the model training script:
 
-```sh
+```bash
 python scripts/model_training.py
 ```
 
@@ -82,7 +84,7 @@ python scripts/model_training.py
 
 After the model has finished training, run the Integrated Gradients attribution script:
 
-```sh
+```bash
 python scripts/integrated_gradients_attribution.py
 ```
 
@@ -90,63 +92,84 @@ python scripts/integrated_gradients_attribution.py
 
 Finally, run the clustering script:
 
-```sh
+```bash
 python scripts/clustering.py
+```
+
+### Step 6: Generate HTML Report
+
+Run the report generation script to create a visual report of attributions and clusters:
+
+```bash
+python scripts/report.py
 ```
 
 ## Script Explanations
 
-### `data_processing.py`
+### data_processing.py
 
-- **Objective**: Process ChIP-seq data to extract sequences from the reference genome.
-- **Process**:
-  1. Load the reference genome.
-  2. Load and filter ChIP-seq data.
-  3. Extract sequences from the genome.
-  4. Save the processed sequences and signal values.
+**Objective:** Process ChIP-seq data to extract sequences from the reference genome.
 
-### `model_training.py`
+**Process:**
+- Load the reference genome.
+- Load and filter ChIP-seq data.
+- Extract sequences from the genome.
+- Save the processed sequences and signal values.
 
-- **Objective**: Train a BPNet-like model to predict ChIP-seq readouts.
-- **Process**:
-  1. Load and preprocess the data.
-  2. Split the data into training and validation sets.
-  3. Create and compile the BPNet-like model.
-  4. Train the model with early stopping and model checkpointing.
-  5. Save the trained model and training history.
+### mlm_training.py
 
-### `attributions.py`
+**Objective:** Train a BPNet-like model to predict ChIP-seq readouts.
 
-- **Objective**: Compute attributions for the trained model using Integrated Gradients.
-- **Process**:
-  1. Load the trained BPNet model.
-  2. One-hot encode the validation data.
-  3. Compute attributions for a subset of the validation data.
-  4. Save the computed attributions.
-  5. Visualize the attributions for the first sequence.
+**Process:**
+- Load and preprocess the data.
+- Split the data into training and validation sets.
+- Create and compile the BPNet-like model.
+- Train the model with early stopping and model checkpointing.
+- Save the trained model and training history.
 
-### `clustering.py`
+### integrated_gradients_attribution.py
 
-- **Objective**: Extract high-attribution seqlets and cluster them.
-- **Process**:
-  1. Load the attributions and input data.
-  2. Extract high-attribution seqlets.
-  3. Cluster the seqlets using DBSCAN.
-  4. Save the clustering results.
-  5. Visualize the clusters.
+**Objective:** Compute attributions for the trained model using Integrated Gradients.
+
+**Process:**
+- Load the trained BPNet model.
+- One-hot encode the validation data.
+- Compute attributions for a subset of the validation data.
+- Save the computed attributions.
+- Visualize the attributions for the selected sequences.
+
+### clustering.py
+
+**Objective:** Extract high-attribution seqlets and cluster them.
+
+**Process:**
+- Load the attributions and input data.
+- Extract high-attribution seqlets.
+- Cluster the seqlets using DBSCAN.
+- Save the clustering results.
+- Visualize the clusters.
+
+### report.py
+
+**Objective:** Generate an HTML report to visualize attributions and sequence logos.
+
+**Process:**
+- Generate HTML for attributions images.
+- Generate HTML for cluster images.
+- Replace placeholders in the template HTML file with generated HTML.
+- Write the final HTML to a new file.
 
 ## Requirements
 
-```
-numpy==1.23.5
-pandas==1.5.3
-scikit-learn==1.2.2
-tensorflow==2.16.1
-matplotlib==3.6.2
-pyfaidx==0.6.0.1
-IPython==8.9.0
-```
+- numpy==1.23.5
+- pandas==1.5.3
+- scikit-learn==1.2.2
+- tensorflow==2.16.1
+- matplotlib==3.6.2
+- pyfaidx==0.6.0.1
+- IPython==8.9.0
+- logomaker==0.8
 
 ## Contact
 
-For any questions or issues, please contact cireeve@ucsd.edu.
+For any questions or issues, please contact [cireeve@ucsd.edu](mailto:cireeve@ucsd.edu).
