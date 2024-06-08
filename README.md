@@ -30,7 +30,7 @@ Ensure you have the following installed:
 
 1. **Clone the repository**:
    ```sh
-   git clone https://github.com/ciara/motify.git
+   git clone https://github.com/ciarareeve/motify.git
    cd motify
    ```
 
