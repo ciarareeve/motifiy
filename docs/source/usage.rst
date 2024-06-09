@@ -70,7 +70,7 @@ This section displays the results of running Motify on 25 randomly selected sequ
 
 .. raw:: html
 
-   <iframe src="_static/results/images/motify_result_output.html" width="100%" height="600px"></iframe>
+   <iframe src="_static/results/images/motify_result_output.html" width="100%" height="800px"></iframe>
 
 Contact
 -------
