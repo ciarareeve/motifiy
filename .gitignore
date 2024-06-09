@@ -135,7 +135,7 @@ help/
 
 # Ignore .DS_Store files
 results/.DS_Store
-
+.DS_Store
 # Ignore typescript directory
 typescript/
 
