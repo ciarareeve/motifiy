@@ -24,6 +24,11 @@ Traditional methods for motif finding, such as peak calling followed by Position
 ## Before Proceeding:
 Please note that a pre-trained model is already available in the `results` folder. This allows you to start directly from Step 4. Training the model is time-intensive; therefore, for tutorial purposes, we provide a pre-trained model trained on histone mark H3K27ac data with the hg38 reference genome. You can fine-tune this model and all subsequent scripts to suit your specific application needs. Feel free to run the provided Jupyter Notebook scripts for more interactive tuning.
 
+### Download and Setup
+
+To get the necessary data files, download the latest release and follow the instructions from [here](https://github.com/ciarareeve/motify/releases/tag/v1.0.0).
+
+
 ## Installation
 
 ### Prerequisites
@@ -57,12 +62,6 @@ Ensure you have the following installed:
 
 4. Download required data: Place your reference genome (e.g., `hg38.fa`) and ChIP-seq data (e.g., `chip_seq_data.bed`) in the `data/raw` directory.
 
-5. If your reference genome files are split into parts (e.g., `hg19.fa.part1`, `hg19.fa.part2`, etc.), combine them before running the scripts:
-
-   ```bash
-   cat data/raw/hg19.fa.part* > data/raw/hg19.fa
-   cat data/raw/hg38.fa.part* > data/raw/hg38.fa
-   ```
 
 ### Additional Steps for Windows Users
 
