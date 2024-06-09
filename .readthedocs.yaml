@@ -1,17 +1,13 @@
 # .readthedocs.yaml
-
 version: 2
 
-# Build configuration
+# Build documentation in the docs/ directory with Sphinx
 sphinx:
-  configuration: docs/conf.py
+  configuration: docs/source/conf.py
 
-# Build using conda
-conda:
-  environment: environment.yml
-
-# Custom steps to install your package
-build:
-  commands:
-    - pip install -e .
+# Optionally set the version of Python and other tools you use
+python:
+  version: 3.10
+  install:
+    - requirements: requirements.txt
 

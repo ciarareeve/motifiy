@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "motify"
+version = "0.1.0"
+description = "A tool for identifying and fine-mapping sequence motifs from ChIP-seq data using deep learning."
+authors = [
+    { name="Ciara Reeve", email="cireeve@ucsd.edu" }
+]
+readme = "README.rst"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy==1.23.5",
+    "pandas==1.5.3",
+    "scikit-learn==1.2.2",
+    "tensorflow==2.16.1",
+    "matplotlib==3.6.2",
+    "pyfaidx==0.6.0.1",
+    "IPython==8.9.0"
+]
+
