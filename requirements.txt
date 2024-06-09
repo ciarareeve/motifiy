@@ -10,3 +10,7 @@ scikit-learn==1.2.2
 tensorflow==2.16.1
 deeplift==0.6.13.0
 pyfaidx>=0.6.0
+sphinx_rtd_dark_mode
+sphinx
+furo
+
