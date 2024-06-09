@@ -1,5 +1,9 @@
 # Motify
 
+[![Documentation Status](https://readthedocs.org/projects/motify/badge/?version=latest)](https://motify.readthedocs.io/en/latest/?badge=latest)
+
+Visit our homepage here https://motify.readthedocs.io
+
 Motify is a tool for identifying and fine-mapping sequence motifs from ChIP-seq data using deep learning. By leveraging the power of BPNet and Integrated Gradients, Motify provides an advanced approach to motif discovery that offers finer resolution compared to traditional methods.
 
 ## Features
@@ -52,6 +56,13 @@ Ensure you have the following installed:
    ```
 
 4. Download required data: Place your reference genome (e.g., `hg38.fa`) and ChIP-seq data (e.g., `chip_seq_data.bed`) in the `data/raw` directory.
+
+5. If your reference genome files are split into parts (e.g., `hg19.fa.part1`, `hg19.fa.part2`, etc.), combine them before running the scripts:
+
+   ```bash
+   cat data/raw/hg19.fa.part* > data/raw/hg19.fa
+   cat data/raw/hg38.fa.part* > data/raw/hg38.fa
+   ```
 
 ### Additional Steps for Windows Users
 
