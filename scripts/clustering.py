@@ -7,15 +7,15 @@ import pandas as pd
 import os
 
 # Create directories to save seqlets and images if they don't exist
-seqlets_dir = '../results/seqlets'
+seqlets_dir = 'results/seqlets'
 os.makedirs(seqlets_dir, exist_ok=True)
-images_dir = '../results/images'
+images_dir = 'results/images'
 os.makedirs(images_dir, exist_ok=True)
 
 # Load attributions and input data
 print("Loading attributions and input data...")
-attributions = np.load('../results/sequences/attributions_subset.npy')  
-input_data = np.load('../data/processed/X.npy', allow_pickle=True) 
+attributions = np.load('results/sequences/attributions_subset.npy')  
+input_data = np.load('data/processed/X.npy', allow_pickle=True) 
 print(f"Attributions shape: {attributions.shape}")
 print(f"Input data shape: {input_data.shape}")
 
@@ -29,7 +29,6 @@ def one_hot_encode(sequence, max_len):
     return one_hot
 
 # Define the maximum sequence length
-# this is based on the sample set used for tutorial -- edit as needed for your application
 max_len = 18593
 
 # One-hot encode input data if necessary
@@ -38,7 +37,6 @@ input_data_encoded = np.array([one_hot_encode(seq, max_len) for seq in input_dat
 print(f"One-hot encoded input data. Shape: {input_data_encoded.shape}")
 
 # Extract high-attribution seqlets with a lower threshold
-#thresholds adjusted to ensure a result was given (small sample set)
 def extract_high_attribution_seqlets(attributions, input_data, threshold=0.015): 
     seqlets = []
     for seq_idx, seq_attributions in enumerate(attributions):
@@ -54,7 +52,6 @@ high_attribution_seqlets = extract_high_attribution_seqlets(attributions, input_
 print(f"Total high-attribution seqlets extracted: {len(high_attribution_seqlets)}")
 
 # Filter out low-variance seqlets
-#thresholds adjusted to ensure a result was given (small sample set)
 def filter_low_variance_seqlets(seqlets, variance_threshold=0.001):
     variances = np.var(seqlets, axis=(1, 2))
     high_variance_seqlets = seqlets[variances > variance_threshold]
@@ -93,10 +90,12 @@ plt.show()
 print("Clusters visualization completed.")
 
 # Save clustering results
-np.save('../results/clusters/seqlet_clusters.npy', labels)
+clusters_dir = 'results/clusters'
+os.makedirs(clusters_dir, exist_ok=True)
+np.save(os.path.join(clusters_dir, 'seqlet_clusters.npy'), labels)
 print("Clustering results saved.")
 
-#Create and visualize sequence logos for each cluster
+# Create and visualize sequence logos for each cluster
 unique_labels = set(labels)
 for cluster in unique_labels:
     if cluster != -1:  # Ignore noise points labeled as -1
@@ -115,7 +114,3 @@ for cluster in unique_labels:
         plt.show()
 
 print("Sequence logos created and saved.")
-
-
-
-
