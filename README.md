@@ -24,10 +24,6 @@ Traditional methods for motif finding, such as peak calling followed by Position
 ## Before Proceeding:
 Please note that a pre-trained model is already available in the `results` folder. This allows you to start directly from Step 4. Training the model is time-intensive; therefore, for tutorial purposes, we provide a pre-trained model trained on histone mark H3K27ac data with the hg38 reference genome. You can fine-tune this model and all subsequent scripts to suit your specific application needs. Feel free to run the provided Jupyter Notebook scripts for more interactive tuning.
 
-### Download and Setup
-
-To get the necessary data files, download the latest release and follow the instructions from [here](https://github.com/ciarareeve/motify/releases/tag/v1.0.0).
-
 
 ## Installation
 
@@ -60,7 +56,71 @@ Ensure you have the following installed:
    pip install -r requirements.txt
    ```
 
-4. Download required data: Place your reference genome (e.g., `hg38.fa`) and ChIP-seq data (e.g., `chip_seq_data.bed`) in the `data/raw` directory.
+### Instructions for Downloading and Setting Up the Necessary Files
+
+
+To get the necessary data files, download the latest release and follow the instructions from [here](https://github.com/ciarareeve/motify/releases/tag/v1.0.0).
+
+
+### Included Files in Release:
+- **X.npy.xz**: Processed numpy array containing one-hot encoded sequences used as input for the model.
+- **y.npy**: Processed numpy array containing labels or output values corresponding to the input sequences in `X.npy`.
+- **hg19.fa.gz**: FASTA file of the hg19 reference genome.
+- **hg38.fa.gz**: FASTA file of the hg38 reference genome.
+
+### Steps:
+
+1. **Download the Files from the GitHub Release**:
+    - Download the following files:
+        - `X.npy.xz` (mandatory for tutorial run)
+        - `y.npy`(mandatory for tutorial run)
+        - `hg19.fa.gz`
+        - `hg38.fa.gz`(mandatory for tutorial run)
+
+2. **Move the Files to the Appropriate Directories**:
+    - Move `X.npy.xz` and `y.npy` to the `data/processed` directory.
+    - Move `hg19.fa.gz` and `hg38.fa.gz` to the `data/raw` directory.
+
+    Example commands:
+    ```bash
+    mv X.npy.xz data/processed/
+    mv y.npy data/processed/
+    mv hg19.fa.gz data/raw/
+    mv hg38.fa.gz data/raw/
+    ```
+
+3. **Uncompress the Files**:
+
+    - Uncompress `X.npy.xz`:
+        ```bash
+        xz -d data/processed/X.npy.xz
+        ```
+
+    - Uncompress `hg19.fa.gz`:
+        ```bash
+        gunzip data/raw/hg19.fa.gz
+        ```
+
+    - Uncompress `hg38.fa.gz`:
+        ```bash
+        gunzip data/raw/hg38.fa.gz
+        ```
+
+4. **Verify the File Structure**:
+    Ensure that the files are in the correct directories with the following structure:
+    ```
+    ├── data
+    │   ├── processed
+    │   │   ├── X.npy
+    │   │   └── y.npy
+    │   └── raw
+    │       ├── hg19.fa
+    │       └── hg38.fa
+    ```
+
+By following these steps you are now ready to run the Motify tool.
+
+Feel free to reach out if you encounter any issues or have any questions.
 
 
 ### Additional Steps for Windows Users
