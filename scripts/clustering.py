@@ -14,8 +14,8 @@ os.makedirs(images_dir, exist_ok=True)
 
 # Load attributions and input data
 print("Loading attributions and input data...")
-attributions = np.load('../results/sequences/attributions_subset.npy')  # Ensure the correct file path
-input_data = np.load('../data/processed/X.npy', allow_pickle=True)  # Ensure the correct file path
+attributions = np.load('../results/sequences/attributions_subset.npy')  
+input_data = np.load('../data/processed/X.npy', allow_pickle=True) 
 print(f"Attributions shape: {attributions.shape}")
 print(f"Input data shape: {input_data.shape}")
 
@@ -29,6 +29,7 @@ def one_hot_encode(sequence, max_len):
     return one_hot
 
 # Define the maximum sequence length
+# this is based on the sample set used for tutorial -- edit as needed for your application
 max_len = 18593
 
 # One-hot encode input data if necessary
@@ -37,13 +38,14 @@ input_data_encoded = np.array([one_hot_encode(seq, max_len) for seq in input_dat
 print(f"One-hot encoded input data. Shape: {input_data_encoded.shape}")
 
 # Extract high-attribution seqlets with a lower threshold
-def extract_high_attribution_seqlets(attributions, input_data, threshold=0.015):  # Adjusted threshold
+#thresholds adjusted to ensure a result was given (small sample set)
+def extract_high_attribution_seqlets(attributions, input_data, threshold=0.015): 
     seqlets = []
     for seq_idx, seq_attributions in enumerate(attributions):
         high_attr_positions = np.where(np.max(np.abs(seq_attributions), axis=1) > threshold)[0]
         for pos in high_attr_positions:
-            if pos-10 >= 0 and pos+10 < input_data.shape[1]:  # Ensure seqlet is within bounds
-                seqlet = input_data[seq_idx, pos-10:pos+10, :]  # Example: 20bp seqlets
+            if pos-10 >= 0 and pos+10 < input_data.shape[1]:  
+                seqlet = input_data[seq_idx, pos-10:pos+10, :]  
                 seqlets.append(seqlet)
     return np.array(seqlets)
 
@@ -52,6 +54,7 @@ high_attribution_seqlets = extract_high_attribution_seqlets(attributions, input_
 print(f"Total high-attribution seqlets extracted: {len(high_attribution_seqlets)}")
 
 # Filter out low-variance seqlets
+#thresholds adjusted to ensure a result was given (small sample set)
 def filter_low_variance_seqlets(seqlets, variance_threshold=0.001):
     variances = np.var(seqlets, axis=(1, 2))
     high_variance_seqlets = seqlets[variances > variance_threshold]
