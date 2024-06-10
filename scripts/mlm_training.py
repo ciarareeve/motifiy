@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[4]:
-
-
 import numpy as np
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -20,31 +14,36 @@ y = np.load('../data/processed/y.npy')
 print(f"Data loaded. X shape: {X.shape}, y shape: {y.shape}")
 
 # Use a smaller subset of data for testing
+# edit as needed for your applications
 X_subset = X[:1000]
 y_subset = y[:1000]
 print(f"Using a subset of data: X_subset shape: {X_subset.shape}, y_subset shape: {y_subset.shape}")
 
 # Print a few samples to verify
-print("Sample sequences:")
+print("Sample sequences verification:")
 for i in range(3):
-    print(f"Sequence {i}: {X_subset[i][:50]}...")  # Print the first 50 nucleotides
+    # Print the first 50 nucleotides
+    print(f"Sequence {i}: {X_subset[i][:50]}...")  
 
 print("Sample labels:")
-print(y_subset[:10])  # Print the first 10 labels
+# Print the first 10 labels
 
+print(y_subset[:10])  
 # Normalize labels
 print("Normalizing labels...")
 y_subset = (y_subset - np.mean(y_subset)) / np.std(y_subset)
 print("Labels normalized.")
 
 # Encode sequences as one-hot (assuming the model expects one-hot encoded input)
+print("Encode sequences as one-hot...")
 def one_hot_encode(seq):
     mapping = {'A': 0, 'C': 1, 'G': 2, 'T': 3, 'a': 0, 'c': 1, 'g': 2, 't': 3, 'N': 4, 'n': 4}
     one_hot = np.zeros((len(seq), 5), dtype=int)
     for i, nucleotide in enumerate(seq):
         if nucleotide in mapping:
             one_hot[i, mapping[nucleotide]] = 1
-    return one_hot[:, :4]  # Exclude 'N' column for 4-channel output
+            # Exclude 'N' column for 4-channel output
+    return one_hot[:, :4]  
 
 print("Applying one-hot encoding...")
 # Apply one-hot encoding
@@ -83,6 +82,7 @@ model = create_bpnet_model(input_length)
 print("BPNet model created.")
 
 # Use a smaller batch size to reduce memory usage
+# edit as needed
 batch_size = 8
 
 # Custom callback to plot the loss after each epoch
@@ -114,18 +114,6 @@ print("Model training completed.")
 # Save training history
 np.save('../results/model/training_history.npy', history.history)
 print("Training history saved.")
-
-
-# In[1]:
-
-
-import tensorflow as tf
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-print("TensorFlow version:", tf.__version__)
-
-
-# In[ ]:
-
 
 
 
