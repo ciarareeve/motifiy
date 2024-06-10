@@ -122,14 +122,6 @@ dmypy.json
 
 # Egg info
 *.egg-info/
-tests/GRCm38.fa
-
-# Ignore bed files in data/raw
-data/raw/*.bed
-
-# Ignore .fai files in data/raw
-data/raw/*.fa.fai
-
 # Ignore help directory
 help/
 
@@ -139,6 +131,4 @@ results/.DS_Store
 # Ignore typescript directory
 typescript/
 
-# Ignore numpy processed files
-data/processed/*.npy
 
